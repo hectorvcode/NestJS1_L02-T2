@@ -1,0 +1,243 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "This is a sample server Books.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+      "version": "1.0.5",
+      "title": "Swagger Books",
+      "termsOfService": "http://swagger.io/terms/",
+      "contact": {
+        "email": "apiteam@swagger.io"
+      },
+      "license": {
+        "name": "Apache 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      }
+    },
+    "tags": [
+      {
+        "name": "Books",
+        "description": "Everything about your books"
+      }
+    ],
+    "basePath": "/",
+    "schemes": [
+      "https",
+      "http"
+    ],
+    "paths": {
+      "/books/{bookId}": {
+        "get": {
+          "tags": [
+            "Books "
+          ],
+          "summary": "get Books",
+          "description": "",
+          "operationId": "getBook",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "bookId",
+              "in": "path",
+              "description": "ID of book that needs to be fetched",
+              "required": true,
+              "type": "integer",
+              "maximum": 10,
+              "minimum": 1,
+              "format": "int64"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success",
+              "schema": {
+                "type": "object",
+                "$ref": "#/definitions/BookGet"
+              }
+            },
+            "400": {
+              "description": "bookId required"
+            },
+            "404": {
+              "description": "Book not found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      },
+      "/pet": {
+        "post": {
+          "tags": [
+            "Book"
+          ],
+          "summary": "Add a new book to the store",
+          "description": "",
+          "operationId": "addBook",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Book object that needs to be added to the store",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Book"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created",
+              "schema": {
+                "type": "object",
+                "$ref": "#/definitions/BookPost"
+              }
+            },
+            "400": {
+              "description": "Invalid request body"
+            },
+            "404": {
+              "description": "Category not found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        },
+        "get": {
+          "tags": [
+            "book"
+          ],
+          "summary": "get books",
+          "description": "",
+          "operationId": "getBooks",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "description": "get all books objects",
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Ok",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/BookDto"
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "BookGet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "example": "El amor en los tiempos del cólera"
+          },
+          "category": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Book": {
+        "type": "object",
+        "required": [
+          "title"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "El amor en los tiempos del cólera"
+          },
+          "category": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "BookDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "example": "El amor en los tiempos del cólera"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "Novel",
+              "Fantasy",
+              "Sci-Fi"
+            ]
+          }
+        }
+      },
+      "BookPost": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "example": "El amor en los tiempos del cólera"
+          },
+          "category": {
+            "$ref": "#/definitions/Category"
+          }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string",
+            "enum": [
+              "Novel",
+              "Fantasy",
+              "Sci-Fi"
+            ]
+          }
+        }
+      }
+    }
+  }
